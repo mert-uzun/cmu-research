@@ -1,0 +1,26 @@
+S = {a, b, c}
+
+Set A:
+aa
+cc
+bab
+cabc
+baaac
+accaab
+acabaa
+cabcaab
+cabccabba
+bacabacc
+
+Set B:
+a
+b
+c
+ab
+ac
+ca
+bc
+acb
+bca
+cab
+cba

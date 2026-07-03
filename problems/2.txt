@@ -1,0 +1,25 @@
+S = {a, b}
+
+Set A:
+aba
+bab
+aabba
+ababb
+baabab
+aababba
+abbbba
+ababaab
+abbaaaab
+bbaababab
+
+Set B:
+ab
+ba
+aa
+bb
+aab
+baaa
+aaaab
+bbbbba
+abbbbbbb
+aaaaa

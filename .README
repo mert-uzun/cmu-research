@@ -1,0 +1,39 @@
+# LLM Automation Walkthrough
+
+This document outlines the implementation of the automation framework designed to prompt 9 different LLM models across 25 language induction problems.
+
+## Summary of Accomplishments
+
+1. **Integrated LLM APIs in [automation.py](file:///Users/mert-uzun/Desktop/CMU%20Resarch/scripts/automation.py):**
+   * Configured provider-specific payload schemas and headers for **Anthropic**, **Gemini**, and **OpenAI-Compatible** endpoints.
+   * Handled automatic folder creation and file writing structure (`results/<model>/<problem>/result.txt`).
+   * Implemented skipping logic for empty/unconfigured API keys and already generated results files (resume feature).
+   * Added API call retry mechanism with exponential backoff.
+2. **Created [test.py](file:///Users/mert-uzun/Desktop/CMU%20Resarch/scripts/test.py):**
+   * A script to test API keys by running a single model against problem 1 and displaying the output directly in the console.
+
+---
+
+## Configuration & Usage Instructions
+
+### 1. Configure API Keys
+Populate the API keys for the models you want to run inside your [scripts/.env](file:///Users/mert-uzun/Desktop/CMU%20Resarch/scripts/.env) file:
+```ini
+CLAUDE_SONNET_4.6_HIGH=your-anthropic-api-key
+GEMINI_3.5_FLASH=your-gemini-api-key
+...
+```
+
+### 2. Verify with test.py
+To verify your API credentials and payloads, run the test script:
+```bash
+python scripts/test.py
+```
+This script will automatically detect active keys in your `.env`, pick the first available one, run a query for Problem 1, display the response, and save it to `test_result.txt`.
+
+### 3. Run the Complete Automation
+Once you've verified the connection, start the main script:
+```bash
+python scripts/automation.py
+```
+It will run through all active models and all 25 problems, skipping any existing `result.txt` files so you can stop and resume the script at any time.
