@@ -1,0 +1,9 @@
+Property: No string in set A contains the contiguous substring `bb` followed later by the contiguous substring `aa`.
+
+Equivalently: all occurrences of `aa`, if any, occur before all occurrences of `bb`.
+
+Formal description: strings over `{a,b}` that are **not** of the form
+
+`x bb y aa z`
+
+for any strings `x, y, z ∈ {a,b}*`.

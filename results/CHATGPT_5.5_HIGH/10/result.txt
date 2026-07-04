@@ -1,0 +1,5 @@
+Property: Every odd-numbered position in the string is `1` when positions are counted from the left starting at 1.
+
+Equivalently: all `0`s, if any, occur only in even positions.
+
+Formal regex: `1([01]1)*([01])?` for nonempty strings.

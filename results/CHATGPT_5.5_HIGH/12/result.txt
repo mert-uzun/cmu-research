@@ -1,0 +1,9 @@
+Property: The string contains at most two `b`’s, and it is not exactly of the form `b a^(odd) b`.
+
+Formal description:
+
+\[
+\#_b(w) \le 2 \quad\text{and}\quad w \notin \{\, b a^{2k+1} b : k \ge 0 \,\}.
+\]
+
+Equivalently: if the string has exactly two `b`’s and starts and ends with `b`, then the number of `a`’s between them must be even.

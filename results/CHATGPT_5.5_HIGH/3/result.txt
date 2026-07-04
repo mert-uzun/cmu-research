@@ -1,0 +1,3 @@
+Property: The string contains exactly three characters that are not `a` — equivalently, the total number of `b`’s and `c`’s is exactly 3.
+
+Formal: for string `w`, `#b(w) + #c(w) = 3`.

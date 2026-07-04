@@ -1,0 +1,3 @@
+Property: The string contains at least one repeated symbol.
+
+Equivalently: At least one of `a`, `b`, or `c` occurs two or more times in the string.

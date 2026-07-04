@@ -1,0 +1,6 @@
+Property: All strings are nonempty and have **even length iff they start with `a`**; equivalently, they have **odd length iff they start with `b`**.
+
+Formal:  
+\[
+w \in A \iff (w \text{ starts with } a \land |w| \text{ is even}) \;\; \text{or} \;\; (w \text{ starts with } b \land |w| \text{ is odd})
+\]

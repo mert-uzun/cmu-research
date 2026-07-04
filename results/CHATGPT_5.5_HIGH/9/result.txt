@@ -1,0 +1,3 @@
+Property: The string contains no two identical symbols next to each other.
+
+Equivalently: it avoids the substrings `aa`, `bb`, and `cc`.

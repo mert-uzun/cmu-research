@@ -1,0 +1,7 @@
+Property: The string contains a substring `aa` that occurs before a later substring `bb`.
+
+Formal description: strings matching the regular expression
+
+`(a|b)* aa (a|b)* bb (a|b)*`
+
+In plain English: all strings have two consecutive `a`’s somewhere, followed later by two consecutive `b`’s.
