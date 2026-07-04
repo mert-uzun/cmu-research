@@ -104,12 +104,12 @@ def get_prompt(problem: str) -> str:
 MODEL_CONFIGS = {
     "CLAUDE_SONNET_4.6_HIGH": {
         "provider": "anthropic",
-        "model_id": "claude-sonnet-4.6",
+        "model_id": "claude-sonnet-4-6",
         "url": "https://api.anthropic.com/v1/messages"
     },
     "CLAUDE_OPUS_4.8_HIGH": {
         "provider": "anthropic",
-        "model_id": "claude-opus-4.8",
+        "model_id": "claude-opus-4-8",
         "url": "https://api.anthropic.com/v1/messages"
     },
     "GEMINI_3.5_FLASH": {
