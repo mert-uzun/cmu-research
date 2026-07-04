@@ -1,9 +1,0 @@
-Property: The string is a concatenation of 2-character blocks, where each block contains one `0` and one `1`.
-
-Formal description: strings in the language
-
-\[
-(01 \mid 10)^*
-\]
-
-So the empty string is allowed, and every nonempty string has even length with positions grouped as `(1,2)`, `(3,4)`, etc., each group being either `01` or `10`.

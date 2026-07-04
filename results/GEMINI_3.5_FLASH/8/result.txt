@@ -1,5 +1,0 @@
-**Property:** 
-
-A string has an even length if and only if it starts with the letter 'a' (or equivalently, has an odd length if and only if it starts with 'b'). 
-
-Alternatively, if a string starts with 'a', its length is even; if it starts with 'b', its length is odd.

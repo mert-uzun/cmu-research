@@ -1,2 +1,0 @@
-**Property:**
-All strings in set A do not contain the substring "aaa" (i.e., they do not contain three or more consecutive 'a's).

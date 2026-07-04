@@ -1,3 +1,0 @@
-Property: The string contains no occurrence of three consecutive `a`’s.
-
-Equivalently: every run of consecutive `a`’s has length at most 2; the substring `aaa` never appears.

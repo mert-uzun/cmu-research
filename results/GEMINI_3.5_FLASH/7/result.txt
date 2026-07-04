@@ -1,8 +1,0 @@
-Based on the provided sets, the common property of all strings in **Set A** is:
-
-**All strings in Set A can be formed by concatenating any number of "01" and "10" blocks (including the empty string, which has zero blocks).** 
-
-### Equivalent Descriptions:
-* **In plain English:** The string has an even length, and when divided into consecutive, non-overlapping pairs of characters (from left to right), every pair is either `"01"` or `"10"`.
-* **Formally:** The string $w \in \{0, 1\}^*$ belongs to the regular language defined by the regular expression: 
-$$(01 \cup 10)^*$$

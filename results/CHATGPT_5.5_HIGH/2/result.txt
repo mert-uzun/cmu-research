@@ -1,3 +1,0 @@
-Property: The string contains both substrings **ab** and **ba**.
-
-Equivalently: the string switches from one letter to the other at least twice, so it has at least three runs of identical letters.

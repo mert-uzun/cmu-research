@@ -1,5 +1,0 @@
-**Property:** 
-
-All strings in set A contain both "**ab**" and "**ba**" as substrings. 
-
-*(Alternatively: The string contains at least two transitions between 'a' and 'b', meaning it has at least three blocks of contiguous identical characters).*

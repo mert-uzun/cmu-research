@@ -1,5 +1,0 @@
-**Property:** All strings in set A contain exactly three characters that are not 'a' (or equivalently, the sum of the number of 'b's and 'c's in the string is exactly 3).
-
-**Formal Description:** 
-Let $N_x(w)$ denote the number of occurrences of the character $x$ in a string $w$. For all strings $w \in A$:
-$$N_b(w) + N_c(w) = 3$$

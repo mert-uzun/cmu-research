@@ -1,3 +1,0 @@
-Property: The string starts with either `b` or `ab`, and it contains no occurrence of three consecutive `a`’s.
-
-Equivalently: the first `b` appears within the first two positions, and every run of consecutive `a`’s has length at most 2.

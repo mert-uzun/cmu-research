@@ -214,7 +214,12 @@ def call_llm(model_name: str, api_key: str, prompt: str, max_retries: int = 3, b
                 elif provider == "gemini":
                     return res_json["candidates"][0]["content"]["parts"][0]["text"]
                 elif provider == "openai":
-                    return res_json["choices"][0]["message"]["content"]
+                    message = res_json["choices"][0]["message"]
+                    content = message.get("content") or ""
+                    reasoning = message.get("reasoning_content") or ""
+                    if reasoning:
+                        return f"<think>\n{reasoning}\n</think>\n\n{content}"
+                    return content
             else:
                 print(f"Error calling {model_name} (Status {response.status_code}): {response.text}")
         except Exception as e:
@@ -239,9 +244,12 @@ def main():
             os.makedirs(target_dir, exist_ok=True)
             
             result_file = os.path.join(target_dir, "result.txt")
-            if os.path.exists(result_file):
-                print(f"  Problem {problem_id}: result.txt already exists. Skipping.")
-                continue
+            if os.path.exists(result_file) and os.path.getsize(result_file) > 0:
+                with open(result_file, "r", encoding="utf-8") as f:
+                    existing_content = f.read().strip()
+                if existing_content:
+                    print(f"  Problem {problem_id}: result.txt already exists and is not empty. Skipping.")
+                    continue
 
             print(f"  Evaluating problem {problem_id}...")
             prompt = get_prompt(problem_text)

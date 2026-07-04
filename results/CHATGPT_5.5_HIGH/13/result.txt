@@ -1,9 +1,0 @@
-Property: The string contains at least one **b**, and any two consecutive **b**’s are separated by exactly three **a**’s; additionally, there are at most three **a**’s before the first **b** and after the last **b**.
-
-Formal description:
-
-\[
-a^i\, b\, (aaa\,b)^n\, a^j
-\]
-
-where \(n \ge 0\) and \(i,j \in \{0,1,2,3\}\).
