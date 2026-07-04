@@ -1,0 +1,58 @@
+
+I need to find what distinguishes set A from set B.
+
+Let me count the total length of each string.
+
+**Set A lengths:**
+- abcb: 4
+- ccc: 3
+- bbb: 3
+- bcb: 3
+- abcb: 4
+- accba: 5
+- aaabcacaaaaaa: 13
+- aaacaaabaaaaac: 14
+- aaccaaabaaaaa: 13
+- acbaaaaaaaab: 12
+
+Mixed lengths, so not length.
+
+**Let me count letters (a, b, c) in each Set A string:**
+- abcb: a=1, b=2, c=1
+- ccc: a=0, b=0, c=3
+- bbb: a=0, b=3, c=0
+- bcb: a=0, b=2, c=1
+- accba: a=2, b=1, c=2
+- aaabcacaaaaaa: a=10, b=1, c=2
+- aaacaaabaaaaac: a=11, b=1, c=2
+- aaccaaabaaaaa: a=10, b=1, c=2
+- acbaaaaaaaab: a=9, b=2, c=1
+
+Let me count b's and c's specifically:
+- abcb: b=2, c=1 → total b+c=3
+- ccc: b=0, c=3 → 3
+- bbb: b=3, c=0 → 3
+- bcb: b=2, c=1 → 3
+- accba: b=1, c=2 → 3
+- aaabcacaaaaaa: b=1, c=2 → 3
+- aaacaaabaaaaac: b=1, c=2 → 3
+- aaccaaabaaaaa: b=1, c=2 → 3
+- acbaaaaaaaab: b=2, c=1 → 3
+
+**The number of non-a characters (b's plus c's) equals 3 in every Set A string!**
+
+**Verify with Set B:**
+- b: b+c=1 ✗
+- c: 1 ✗
+- a: 0 ✗
+- bc: 2 ✗
+- cb: 2 ✗
+- cba: 2 ✗
+- cbcc: 4 ✗
+- bbcbb: 5 ✗
+- aacbaa: 2 ✗
+- aaaaaac: 1 ✗
+
+All Set B strings have b+c count ≠ 3.
+
+**Property:** Each string in set A contains exactly three characters that are either **b** or **c** (i.e., the number of non-**a** symbols is exactly 3).

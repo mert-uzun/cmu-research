@@ -1,0 +1,61 @@
+
+I need to find what distinguishes set A from set B.
+
+Let me count the b's in each set A string:
+
+- b: 1 b
+- baaa: 1 b
+- baaab: 2 b's
+- abaaa: 1 b
+- aabaaab: 2 b's
+- baaabaa: 2 b's
+- aabaaaba: 2 b's
+- abaaabaaaba: 3 b's
+- baaabaaabaaa: 3 b's
+- aaabaaabaaabaaa: 3 b's
+
+Let me look at the structure. The b's seem to be separators. Let me look at runs of a's between/around b's.
+
+**baaa**: b, then aaa → segments: "" then "aaa"
+**baaab**: b aaa b → ""/aaa/""
+**abaaa**: a b aaa → "a"/"aaa"
+**aabaaab**: aa b aaa b → "aa"/"aaa"/""
+**baaabaa**: b aaa b aa → ""/aaa/aa
+**aabaaaba**: aa b aaa b a → aa/aaa/a
+**abaaabaaaba**: a b aaa b aaa b a → a/aaa/aaa/a
+**baaabaaabaaa**: b aaa b aaa b aaa → ""/aaa/aaa/aaa
+**aaabaaabaaabaaa**: aaa b aaa b aaa b aaa → aaa/aaa/aaa/aaa
+
+Interesting! The internal segments (between two b's) are always "aaa" (3 a's).
+
+Let me verify. Splitting by b:
+- **b**: segments ["", ""]  → no internal segment
+- **baaa**: ["", "aaa"] → no internal
+- **baaab**: ["", "aaa", ""] → internal: "aaa" ✓
+- **abaaa**: ["a", "aaa"] → no internal
+- **aabaaab**: ["aa", "aaa", ""] → internal "aaa" ✓
+- **baaabaa**: ["", "aaa", "aa"] → internal "aaa" ✓
+- **aabaaaba**: ["aa", "aaa", "a"] → internal "aaa" ✓
+- **abaaabaaaba**: ["a", "aaa", "aaa", "a"] → internals "aaa","aaa" ✓
+- **baaabaaabaaa**: ["", "aaa", "aaa", "aaa"] → internals "aaa" ✓
+- **aaabaaabaaabaaa**: ["aaa","aaa","aaa","aaa"] → internals "aaa" ✓
+
+So the property: **every maximal block of a's that lies strictly between two b's has exactly 3 a's**.
+
+Let me check set B to confirm this fails:
+- **bb**: ["","",""] → internal "" (0 a's) ✗ — good, fails
+- **baab**: ["","aa",""] → internal "aa" (2) ✗ good
+- **aabba**: ["aa","","a"] → internal "" (0) ✗ good
+- **bababaaab**: ["","a","a","aaa",""] → internals "a","a","aaa" — some are 1 ✗ good
+- **babababbb**: internals include "a" ✗ good
+- **baaabaaabaab**: ["","aaa","aaa","aa",""] → internal "aa"=2 ✗ good
+- **babaaaababb**: internals "a","aaaa"... ✗ good
+- **babaabbbaabbaa**: internals include "a" ✗ good
+- **abbabababbabbab**: internals include "" ✗ good
+- **baabababbbbababab**: internal "aa"=2 ✗ good
+
+All set B strings fail. 
+
+**Property:** Every maximal run of a's that appears strictly between two b's consists of exactly three a's. (The leading and trailing runs of a's, before the first b and after the last b, may be any length.)
+
+Note: this requires at least one b (all set A strings contain a b).

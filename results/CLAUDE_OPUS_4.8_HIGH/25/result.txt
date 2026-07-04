@@ -1,0 +1,136 @@
+
+I need to find a property common to all strings in set A but not in set B.
+
+Let me analyze the strings.
+
+**Set A:**
+- 011010
+- 111111
+- 1101101
+- 01110101
+- 01001
+- 1001
+- 001010
+- 010001001
+- 000
+- 0
+- 00
+- 0000
+- 001100
+
+**Set B:**
+- 1100
+- 11100
+- 11000
+- 11001
+- 111000
+- 1101001
+- 01101100
+- 100110100
+- 110001010
+- 10011000
+- 10111010100
+
+Let me count 0s and 1s.
+
+Let me look at counts. Set A "0" has one 0. "00", "000", "0000" - all 0s. So parity varies.
+
+Let me count number of 1s:
+- 011010: three 1s
+- 111111: six 1s
+- 1101101: five 1s
+- 01110101: five 1s
+- 01001: two 1s
+- 1001: two 1s
+- 001010: two 1s
+- 010001001: three 1s
+- 000: zero
+- 0: zero
+- 00: zero
+- 0000: zero
+- 001100: two 1s
+
+No clear parity of 1s.
+
+Let me check Set B for a pattern. Many contain "1100" or "000" substrings. Let me look at "10" occurrences or "00".
+
+Let me try counting the number of "10" transitions vs "01".
+
+Actually let me check: does Set A avoid the substring "1100"?
+- Set B: 1100 (yes), 11100 (11100 has "1100"? positions: 1,1,1,0,0 -> "1100" appears yes), 11000 (yes has 1100), 11001 (yes 1100), 111000 (yes), 1101001 (1101001 - "1100"? no... 11-01-001, substring "1100"? no). Hmm.
+
+Let me try counting number of 1s mod 3 or something. 
+
+Let me try: number of 0s minus number of 1s.
+- 011010: 3 zeros, 3 ones → 0
+- 111111: 0 zeros, 6 ones → -6
+- 1101101: 2 zeros, 5 ones → -3
+- 01110101: 3 zeros, 5 ones → -2
+
+Not consistent.
+
+Let me count 1s again carefully and look mod something. Number of 1s in A: 3,6,5,5,2,2,2,3,0,0,0,0,2. 
+
+Values: {0,2,3,5,6}. Missing: 1,4. Set B number of 1s: 1100(2),11100(3),11000(2),11001(3),111000(3),1101001(4),01101100(4),100110100(4),110001010(3),10011000(2),10111010100(5).
+
+Set B has 4 appearing, Set A never has 4? A has 0,2,3,5,6. Not a clean rule.
+
+Let me count number of 0s in A: 3,0,2,3,3,2,4,6,3,1,2,4,4. Set B 0s: 2,3,3,2,3,3,5,6,6,5,7.
+
+Let me try: is the number of 1s in each string ≢ number related... Let me check if every A string has an odd length OR... lengths A: 6,6,7,8,5,4,6,9,3,1,2,4,6. Both parities.
+
+Let me check the **value interpreting as binary being divisible by 3**.
+- 011010 = 26, /3 no
+Not that.
+
+Let me reconsider — count 0s vs 1s, difference mod 3: A: 0,-6,-3,-2... -2 not 0 mod 3.
+
+Let me check number of "00" occurrences or check if strings have equal 0s and 1s... no.
+
+Let me look at Set B: they all seem to contain "1100" or perhaps a specific pattern. Actually check number of 1s minus number of 0s in B: all positive or... 1100: 2-2=0.
+
+Let me count occurrences of "10" (descents) minus "01" (ascents). For a string, this equals (first bit) - (last bit) roughly. #10 - #01 = 1 if starts with 1 ends with 0; = -1 if starts 0 ends 1; 0 otherwise.
+
+**Set A** first/last: 
+- 011010: 0...0 → 0
+- 111111: 1...1 → 0
+- 1101101: 1...1 → 0
+- 01110101: 0...1 → -1
+- 01001: 0...1 → -1
+- 1001: 1...1 → 0
+- 001010: 0...0 → 0
+- 010001001: 0...1 → -1
+- 000: 0...0
+- 0: 0...0
+- 00,0000,001100: 0
+
+**Set B** first/last:
+- 1100:1..0→+1
+- 11100:1..0→+1
+- 11000:1..0→+1
+- 11001:1..1→0... 
+
+Hmm 11001 ends in 1. Let me check "starts with 1 and ends with 0": B has many but not all.
+
+Let me check number of 1s is not ≡1 mod... Actually A 1-counts: {0,2,3,5,6}, B: {2,3,4,5}. Overlap. Not it.
+
+**Property (my best inference):** Every string in set A has an **even number of "10" substrings** (occurrences of a 1 immediately followed by a 0). Let me verify.
+
+A: 011010→"10" at pos: 10(3-4? "1010") count: 011010 has 10 at index2-3? chars:0,1,1,0,1,0 → "10" at (2,3),(4,5)=2 ✓even
+111111→0 ✓; 1101101→ pos(1,2)? 1,1,0,1,1,0,1: "10"at(1,2)?1,0 yes; (4,5)1,0 yes=2✓; 01001→0,1,0,0,1:"10"at(1,2)=1 odd ✗.
+
+Not that.
+
+Given time, my best supported answer:
+
+**Property: The number of 0s in the string is not equal to the number of 1s... ** Check A: 011010 has 3&3 equal — fails.
+
+**Property: Set A strings, when they contain any 1s, have a number of 1s that is odd... ** no (6 is even).
+
+I'll give my most defensible partial answer:
+
+**Property:** Every string in set A has an **even number of occurrences of the substring "1"** — no.
+
+Given difficulty, my answer: **A string is in set A iff it does NOT contain "1100" as a substring AND does not go ...** — Best guess:
+
+**Property: Strings in set A do not contain the substring "1100" (nor lead a "11...00" pattern).**

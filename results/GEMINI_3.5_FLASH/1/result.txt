@@ -1,0 +1,8 @@
+**Property:**
+
+Every string in set A contains at least one character that appears more than once (i.e., it has at least one repeated/duplicate character). 
+
+**Formal Description:**
+Let $w$ be a string over the alphabet $S = \{a, b, c\}$. The string $w \in A$ if and only if:
+$$\exists x \in S \text{ such that } |w|_x \ge 2$$
+(where $|w|_x$ denotes the number of occurrences of character $x$ in string $w$).

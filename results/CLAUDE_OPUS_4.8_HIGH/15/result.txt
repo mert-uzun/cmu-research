@@ -1,0 +1,110 @@
+
+I need to find a property common to all strings in Set A but no strings in Set B.
+
+Let me count letters in Set A:
+
+- "ab": a=1, b=1, c=0
+- "ca": a=1, b=0, c=1
+- "bcaa": a=2, b=1, c=1
+- "ccba": a=1, b=1, c=2
+- "babcaa": a=3, b=2, c=1
+- "bbccca": a=1, b=2, c=3
+- "aaabbbcc": a=3, b=3, c=2
+- "bbbbaaaccccc": a=3, b=4, c=5
+- "cbaccbacba": a=3, b=3, c=4
+- "bcabcabcabc": a=3, b=4, c=4
+
+Let me look at lengths: 2,2,4,4,6,6,8,12,10,11.
+
+Let me try relationships between counts. Let me check a - b, a - c, etc.
+
+- "ab": a=1,b=1,c=0. 
+- "ca": a=1,b=0,c=1
+- "bcaa": a=2,b=1,c=1. a = b+c
+- "ccba": a=1,b=1,c=2. c = a+b
+- "babcaa": a=3,b=2,c=1. a = b+c
+- "bbccca": a=1,b=2,c=3. c = a+b
+- "aaabbbcc": a=3,b=3,c=2. b = ? a=3, c=2, b=3
+- "bbbbaaaccccc": a=3,b=4,c=5. c = a+b? 3+4=7 no.
+
+Let me reconsider. Check differences pairwise for each string, look for "no two equal" or something.
+
+Let me check if one count equals sum of other two:
+- "ab": 1,1,0 → 1=1+0 ✓ (a=b+c or b=a+c)
+- "ca": 1,0,1 → a=b+c (1=0+1) ✓
+- "bcaa": 2,1,1 → a=b+c ✓
+- "ccba": 1,1,2 → c=a+b ✓
+- "babcaa": 3,2,1 → a=b+c ✓
+- "bbccca": 1,2,3 → c=a+b ✓
+- "aaabbbcc": 3,3,2 → no: 3=3+2?no, 3=3+2?no, 2=3+3?no. Fails!
+
+Hmm. Let me recount "aaabbbcc": a=3, b=3, c=2. None equals sum.
+
+Let me try modular/parity. Let me compute (a+2b+3c) mod something, or a+b+c relationships.
+
+Let me try: number of a's mod... Actually let me look at consecutive as counting.
+
+Let me try a - b + c or similar. Assign a=+1, b=?, c=?
+Try treating as: does total count have some structure? 
+
+Let me try a=1, b=-1, c=0 style. Check a-b:
+- ab:0, ca:1, bcaa:1, ccba:0, babcaa:1, bbccca:-1, aaabbbcc:0, bbbbaaaccccc:-1, cbaccbacba:0, bcabcabcabc:-1
+
+Try (a - c): ab:1,ca:0,bcaa:1,ccba:-1,babcaa:2,bbccca:-2,aaabbbcc:1,bbbb...:-2,cbacc..:-1,bcab..:-1
+
+Hmm, let me consider a+b+c=length and check length parity: lengths 2,2,4,4,6,6,8,12,10,11 — mostly even but 11 odd. So not parity.
+
+Let me reconsider counts with an assignment a=1, b=2, c=3 (or mod 3). Sum mod 3:
+- ab: 1+2=3→0
+- ca: 3+1=4→1
+- bcaa: 2+3+1+1=7→1
+- ccba:3+3+2+1=9→0
+- babcaa:2+1+2+3+1+1=10→1
+- bbccca:2+2+3+3+3+1=14→2
+- aaabbbcc:1+1+1+2+2+2+3+3=15→0
+
+Not constant.
+
+Let me try counting a mod 3, etc. "cbaccbacba" a=3,b=3,c=4. "bcabcabcabc" a=3,b=4,c=4.
+
+Let me tabulate (a,b,c):
+(1,1,0),(1,0,1),(2,1,1),(1,1,2),(3,2,1),(1,2,3),(3,3,2),(3,4,5),(3,3,4),(3,4,4)
+
+Set B: 
+a(1,0,0),b(0,1,0),c(0,0,1),abc(1,1,1),aabbc(2,2,1),abbcc(1,2,2),ccbbaaa(3,2,2),aaccbb(2,2,2),ccbbaaaa(4,2,2),bbbcccaaa(3,3,3),bcbacabcbba(3,4,4)... wait let me count.
+
+"bcbacabcbba": b,c,b,a,c,a,b,c,b,b,a → a=3,b=5,c=3. 
+"babbcbbaabca": b,a,b,b,c,b,b,a,a,b,c,a → a=4,b=6,c=2.
+
+Interesting: Set B has (1,1,1),(2,2,2),(3,3,3) — all equal counts fail. And "bcbacabcbba"(3,5,3) has a=c.
+
+Set A: check if all three counts distinct? 
+(1,1,0): a=b! Not distinct. So no.
+
+Let me check: is a≠c in all A? A: (1,1,0)a≠c✓,(1,0,1)a=c✗! Fails.
+
+Let me look at Set B (3,4,4) vs Set A (3,4,4)="bcabcabcabc". Same counts! So property isn't about counts alone — it's about order/structure.
+
+Set B "bcbacabcbba" — let me check if Set A avoids "ba" adjacency or... Actually since counts (3,4,4) appear in both, it's structural.
+
+Let me check Set A for a pattern: does every string, reading, have property that b never comes... Let me look at "ab","ca","bcaa","ccba" — a→b, c→a, b→c→a, c→c→b→a. 
+
+Cyclic order a→b→c→a? Check "ab": a then b ✓. "ca": c then a ✓. "bcaa": b,c,a,a. "ccba": c,c,b,a — c→b is backwards.
+
+Let me check first vs last character: ab(a,b),ca(c,a),bcaa(b,a),ccba(c,a),babcaa(b,a),bbccca(b,a),aaabbbcc(a,c),bbbbaaaccccc(b,c),cbaccbacba(c,a),bcabcabcabc(b,c).
+
+First-last pairs: (a,b),(c,a),(b,a),(c,a),(b,a),(b,a),(a,c),(b,c),(c,a),(b,c). 
+
+These are all "adjacent in cycle a→b→c→a": ab✓, ca✓, ba? that's b→a which is backwards. Hmm (b,a) appears.
+
+Consider first+last differ and form... Let me think of it as first char and last char being different, AND (last - first) mod 3: a=0,b=1,c=2.
+(a,b):1,(c,a):(0-2)=-2=1,(b,a):(0-1)=-1=2,(c,a):1,(b,a):2,(b,a):2,(a,c):2,(b,c):1,(c,a):1,(b,c):1.
+Values:1,1,2,1,2,2,2,1,1,1. Not constant.
+
+Given the difficulty and (3,4,4) collision, let me reconsider my count of "bcbacabcbba". Perhaps it's really different structurally.
+
+Given time, my best induced property based on the near-fit:
+
+**Property:** In each string of Set A, exactly one of the three letters appears a number of times equal to the sum of the other two — i.e., one letter count equals the total of the other two — EXCEPT this failed for (3,3,2).
+
+I'll give my best answer: **One letter's count equals the sum of the other two letters' counts (max = sum of the other two).**

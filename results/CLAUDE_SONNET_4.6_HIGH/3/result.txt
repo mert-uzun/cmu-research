@@ -1,0 +1,36 @@
+I'll analyze the strings in both sets to find the common property.
+
+Let me examine set A strings carefully:
+
+- `abcb` → a:1, b:2, c:1
+- `ccc` → a:0, b:0, c:3
+- `bbb` → a:0, b:3, c:0
+- `bcb` → a:0, b:2, c:1
+- `abcb` → a:1, b:2, c:1
+- `accba` → a:2, b:1, c:2
+- `aaabcacaaaaaa` → a:10, b:1, c:2
+- `aaacaaabaaaaac` → a:10, b:1, c:2 (wait, let me recount) → a:10, b:1, c:2... hmm
+- `aaccaaabaaaaa` → a:9, b:1, c:2... let me recount: a-a-c-c-a-a-a-b-a-a-a-a-a → a:10, b:1, c:2
+- `acbaaaaaaaab` → a:9, b:2, c:1
+
+Now set B strings:
+- `b` → b:1
+- `c` → c:1
+- `a` → a:1
+- `bc` → b:1, c:1
+- `cb` → c:1, b:1
+- `cba` → c:1, b:1, a:1
+- `cbcc` → c:3, b:1
+- `bbcbb` → b:4, c:1
+- `aacbaa` → a:4, b:1, c:1
+- `aaaaaac` → a:6, c:1
+
+Looking at the counts of **b** and **c** together:
+
+In set A:
+- b+c counts: 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 — **always 3!**
+
+In set B:
+- b+c counts: 1, 1, 1, 2, 2, 2, 4, 5, 2, 1 — never 3.
+
+**Property:** Every string in set A contains exactly 3 occurrences of the letters `b` and `c` combined (i.e., the total count of `b`s plus `c`s equals 3).

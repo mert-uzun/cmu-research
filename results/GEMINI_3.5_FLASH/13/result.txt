@@ -1,0 +1,9 @@
+Based on the provided sets, the common property of the strings in Set A can be described as follows:
+
+### Plain English Description:
+Every string in Set A contains **at least one 'b'**, has **exactly three 'a's between any two consecutive 'b's**, and contains **at most three consecutive 'a's** anywhere in the string (including at the beginning and the end).
+
+### Formal Description:
+All strings in Set A match the regular expression:
+$$a^i b (a^3 b)^k a^j$$
+where $k \ge 0$ and $0 \le i, j \le 3$.

@@ -1,0 +1,114 @@
+
+I need to find what distinguishes set A from set B.
+
+Let me count string lengths first.
+
+Set A lengths:
+- aa: 2
+- cc: 2
+- bab: 3
+- cabc: 4
+- baaac: 5
+- accaab: 6
+- acabaa: 6
+- cabcaab: 7
+- cabccabba: 9
+- bacabacc: 8
+
+Set B lengths:
+- a: 1
+- b: 1
+- c: 1
+- ab, ac, ca, bc: 2
+- acb, bca, cab, cba: 3
+
+So length isn't the key (both have length 2, 3).
+
+Let me count letters. Let me try counting the number of a's.
+
+Set A:
+- aa: 2 a's
+- cc: 0 a's
+- bab: 1 a
+- cabc: 1 a
+- baaac: 3 a's
+- accaab: 3 a's
+- acabaa: 4 a's
+- cabcaab: 3 a's
+- cabccabba: 3 a's
+- bacabacc: 3 a's
+
+Not consistent for a's count.
+
+Let me look at first and last characters.
+
+Set A first/last:
+- aa: a,a (same)
+- cc: c,c (same)
+- bab: b,b (same)
+- cabc: c,c (same)
+- baaac: b,c (diff!)
+
+So not that.
+
+Let me count total characters mod something. Lengths in A: 2,2,3,4,5,6,6,7,9,8. Various.
+
+Set B are all "short" strings — length 1, 2, 3. Set A has some length 2 and 3 too. Let me compare length-2: A has aa, cc; B has ab, ac, ca, bc. Length-3: A has bab; B has acb, bca, cab, cba.
+
+For length 2: A={aa, cc}, B={ab,ac,ca,bc}. Note ba, bb, cb missing from both. The A ones (aa, cc) — pairs of same letter. B ones are pairs of different letters.
+
+For length 3: A={bab}, B={acb,bca,cab,cba}. bab has b...b same ends, and repeated. 
+
+Let me think about adjacent equal or something. Maybe count where consecutive letters... Let me check if all strings in A contain a double (two identical adjacent chars).
+
+- aa: "aa" yes
+- cc: "cc" yes
+- bab: no double! b,a,b - no adjacent equal.
+
+Hmm, bab has no double. Let me reconsider.
+
+Let me count each letter and look at parity.
+- aa: a=2,b=0,c=0 (all even)
+- cc: a=0,b=0,c=2 (all even)
+- bab: a=1,b=2,c=0 (a odd)
+- cabc: a=1,b=1,c=2 
+- baaac: a=3,b=1,c=1
+
+No clear parity.
+
+Let me try: number of a's = number of ... let me compute a,b,c counts:
+- aa: 2,0,0
+- cc: 0,0,2
+- bab: 1,2,0
+- cabc: 1,1,2
+- baaac: 3,1,1
+- accaab: 3,1,2
+- acabaa: 4,1,1
+- cabcaab: 3,2,2
+- cabccabba: 3,2,4
+- bacabacc: 3,1,4
+
+Let me check #a - #c or #a relative to others. Try (#a) parity with (#b+#c)? 
+
+Try #a + #b + #c... just length.
+
+Let me try: is #a always ≥ #b and #a ≥ #c? 
+- aa: a=2≥0,≥0 ✓
+- cc: a=0, c=2, no.
+
+Try total count: does #a ≥ 1 count... cc has 0 a's.
+
+Let me reconsider. Set B are exactly strings with all distinct characters (no repeated letter)! 
+- a,b,c: single, distinct
+- ab,ac,ca,bc: all distinct chars
+- acb,bca,cab,cba: all distinct chars (permutations of abc)
+
+Set A: does each have a repeated letter?
+- aa: a repeated ✓
+- cc: c repeated ✓
+- bab: b repeated ✓
+- cabc: c repeated ✓
+- baaac: a repeated ✓
+- all others have repeats ✓
+
+**Property:** Every string in set A contains at least one letter that appears more than once (i.e., not all characters are distinct). Strings in set B have all distinct characters.

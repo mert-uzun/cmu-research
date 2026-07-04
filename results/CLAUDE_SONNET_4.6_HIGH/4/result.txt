@@ -1,0 +1,36 @@
+I'll analyze the strings in Set A and Set B to find the distinguishing property.
+
+Let me count the number of a's in each string:
+
+**Set A:**
+- "a" → 1 a
+- "b" → 0 a's
+- "ab" → 1 a
+- "aba" → 2 a's
+- "abab" → 2 a's
+- "bbaab" → 2 a's
+- "abababaa" → 5 a's
+- "aabababba" → 4 a's
+- "babaababbb" → 4 a's
+- "baabbababab" → 4 a's
+
+**Set B:**
+- "aaa" → 3 a's
+- "aaab" → 3 a's
+- "baaaab" → 4 a's... hmm
+
+Let me reconsider. Let me count occurrences of "aa" (consecutive a's):
+
+**Set A:** none of them contain "aa" as a substring... wait, "bbaab" contains "aa". Let me try another angle.
+
+Let me count **maximum consecutive a's**:
+
+- Set A strings: max run of a's is at most 2
+- Set B strings: "aaa", "aaab", "baaaab", "bbbaaa", "aaabaa", "ababaaaa", "abaaababab"... all contain runs of 3+ a's
+
+Let me verify all Set A strings:
+- "a"→1, "b"→0, "ab"→1, "aba"→1, "abab"→1, "bbaab"→2, "abababaa"→2, "aabababba"→2, "babaababbb"→2, "baabbababab"→2 ✓
+
+All Set B strings contain a run of **3 or more consecutive a's**. ✓
+
+**Property: Every run of consecutive a's in the string has length at most 2 (no three or more a's appear consecutively).**

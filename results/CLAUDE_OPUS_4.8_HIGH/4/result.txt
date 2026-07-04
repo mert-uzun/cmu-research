@@ -1,0 +1,62 @@
+<think>
+Let me analyze the strings.
+
+Set A:
+a - 1a, 0b
+b - 0a, 1b
+ab - 1a, 1b
+aba - 2a, 1b
+abab - 2a, 2b
+bbaab - 2a, 3b
+abababaa - 5a, 3b
+aabababba - 5a, 4b
+babaababbb - 4a, 6b
+baabbababab - 5a, 6b
+
+Set B:
+aaa - 3a, 0b
+aaab - 3a, 1b
+baaaab - 4a, 2b
+bbbaaa - 3a, 3b
+aaabaa - 5a, 1b
+ababaaaa - 6a, 2b
+abaaababab - 6a, 4b
+aaaabbabba - 6a, 4b
+abbabaabbaaa - 7a, 5b
+abababababaaa - 8a, 5b
+
+Let me look for "aaa" (three consecutive a's).
+Set B all seem to have "aaa"? Let me check.
+aaa - yes
+aaab - yes
+baaaab - "aaaa" yes
+bbbaaa - "aaa" yes
+aaabaa - "aaa" yes
+ababaaaa - "aaaa" yes
+abaaababab - "aaa" yes
+aaaabbabba - "aaaa" yes
+abbabaabbaaa - "aaa" yes
+abababababaaa - "aaa" yes
+
+Set A - check no "aaa":
+a - no
+b - no
+ab - no
+aba - no
+abab - no
+bbaab - "aa" but not aaa, no
+abababaa - "aa" no aaa
+aabababba - "aa" no aaa
+babaababbb - "aa" no
+baabbababab - "aa" no
+
+Great. So Set A has no three consecutive a's, Set B always has three consecutive a's.
+</think>
+
+**Property:** Strings in set A never contain three consecutive a's (no substring "aaa"). Every string in set B contains at least one occurrence of "aaa".
+
+Checking:
+- **Set A:** The longest run of a's in any string is 2 (e.g., "bb**aa**b", "abababa**a**"), never 3+.
+- **Set B:** Each string contains "aaa" somewhere (e.g., "**aaa**", "b**aaaa**b", "bbb**aaa**", "abab**aaaa**").
+
+**Formal:** A string belongs to A if and only if it does **not** contain the substring `aaa`.

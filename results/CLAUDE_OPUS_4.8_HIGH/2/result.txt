@@ -1,0 +1,160 @@
+<think>
+Let me analyze the lengths and properties.
+
+Set A:
+aba - length 3
+bab - length 3
+aabba - length 5
+ababb - length 5
+baabab - length 6
+aababba - length 7
+abbbba - length 6
+ababaab - length 7
+abbaaaab - length 8
+bbaababab - length 9
+
+Set B:
+ab - 2
+ba - 2
+aa - 2
+bb - 2
+aab - 3
+baaa - 4
+aaaab - 5
+bbbbba - 6
+abbbbbbb - 8
+aaaaa - 5
+
+Let me count a's and b's.
+
+Set A:
+aba: a=2, b=1
+bab: a=1, b=2
+aabba: a=3, b=2
+ababb: a=2, b=3
+baabab: a=3, b=3
+aababba: a=4, b=3
+abbbba: a=2, b=4
+ababaab: a=4, b=3
+abbaaaab: a=5, b=3
+bbaababab: a=4, b=5
+
+Set B:
+ab: a=1, b=1
+ba: a=1, b=1
+aa: a=2, b=0
+bb: a=0, b=2
+aab: a=2, b=1
+baaa: a=3, b=1
+aaaab: a=4, b=1
+bbbbba: a=1, b=5
+abbbbbbb: a=1, b=7
+aaaaa: a=5, b=0
+
+Hmm. Set A: both a and b counts differ but... Let's check difference |a-b|.
+aba: 1
+bab: 1
+aabba: 1
+ababb: 1
+baabab: 0
+aababba: 1
+abbbba: 2
+ababaab: 1
+abbaaaab: 2
+bbaababab: 1
+
+Set B:
+ab: 0
+ba: 0
+aa: 2
+bb: 2
+aab: 1
+baaa: 2
+aaaab: 3
+bbbbba: 4
+abbbbbbb: 6
+aaaaa: 5
+
+Not clean.
+
+Let me think about "both a and b appear at least twice" or something.
+
+Set A: does every string contain at least 2 a's and at least 2 b's? 
+aba: a=2, b=1. No, only 1 b.
+
+Set B: aab a=2, b=1. Both A and B have this.
+
+Let me look at first and last characters.
+Set A:
+aba: a...a
+bab: b...b
+aabba: a...a
+ababb: a...b
+baabab: b...b
+aababba: a...a
+abbbba: a...a
+ababaab: a...b
+abbaaaab: a...b
+bbaababab: b...b
+
+Set B:
+ab: a...b
+ba: b...a
+aa: a...a
+bb: b...b
+aab: a...b
+baaa: b...a
+aaaab: a...b
+bbbbba: b...a
+abbbbbbb: a...b
+aaaaa: a...a
+
+Not distinguishing.
+
+Let me think about presence of both "aa"... no.
+
+Consider: Set A strings all contain both "ab" and "ba" as substrings? i.e., contain at least one "ab" and at least one "ba".
+
+Set A:
+aba: contains ab (pos0), ba (pos1). Yes.
+bab: contains ba(0), ab(1). Yes.
+aabba: ab? positions: a a b b a. "ab" at pos1. "ba" at pos3. Yes.
+ababb: ab yes, ba yes (pos1). Yes.
+baabab: ba(0), ab(2)... yes.
+aababba: ab yes, ba yes. yes.
+abbbba: ab(0), ba(4). yes.
+ababaab: ab yes, ba yes. yes.
+abbaaaab: ab(0), ba(2). yes.
+bbaababab: ba(1), ab(3). yes.
+
+Set B:
+ab: has ab but no ba. Fails.
+ba: has ba but no ab. Fails.
+aa: neither. Fails.
+bb: neither. Fails.
+aab: ab yes, ba no. Fails.
+baaa: ba yes, ab no. Fails.
+aaaab: ab yes, ba no. Fails.
+bbbbba: ba yes, ab no. Fails.
+abbbbbbb: ab yes, ba no. Fails.
+aaaaa: neither. Fails.
+
+All of Set B fails! And all of Set A passes.
+
+So the property: string contains both "ab" and "ba" as substrings. Equivalently, the string has at least two "runs" changes... Actually containing both means there's an a->b transition and a b->a transition.
+</think>
+
+**Property:** Every string in Set A contains **both** the substring `ab` **and** the substring `ba`.
+
+**Verification:**
+
+- Each Set A string has at least one place where an `a` is immediately followed by a `b` (an `ab`), *and* at least one place where a `b` is immediately followed by an `a` (a `ba`). This is equivalent to saying the string changes from a-block to b-block at least once *and* from b-block to a-block at least once — i.e., it consists of at least **three alternating runs** of a's and b's (e.g., `a…b…a…` or `b…a…b…`).
+
+- Every Set B string fails this:
+  - `aa`, `bb`, `aaaaa` — no letter change at all.
+  - `ab`, `aab`, `aaaab`, `abbbbbbb` — contain `ab` but never `ba` (only two runs, a's then b's).
+  - `ba`, `baaa`, `bbbbba` — contain `ba` but never `ab` (only two runs, b's then a's).
+
+So Set B contains only strings with **at most two runs**, which never have both `ab` and `ba`.
+
+**Succinct statement:** A string is in A iff it contains both `ab` and `ba` as substrings (equivalently, it has three or more alternating runs of identical letters).

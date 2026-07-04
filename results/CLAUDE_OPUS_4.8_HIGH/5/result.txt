@@ -1,0 +1,63 @@
+
+I need to find a property common to all strings in Set A but absent from all strings in Set B.
+
+Let me count a's and b's in each string.
+
+**Set A:**
+- aabb: a=2, b=2
+- baabb: a=2, b=3
+- aabbb: a=2, b=3
+- aaaabb: a=4, b=2
+- bbaaabb: a=3, b=4
+- abaaabb: a=4, b=3
+- aaababbb: a=4, b=4
+- ababaaabb: a=5, b=4
+- aabababbaaa: a=6, b=4... let me recount: a,a,b,a,b,a,b,b,a,a,a = a=6, b=4... wait: positions: a(1)a(2)b(1)a(3)b(2)a(4)b(3)b(4)a(5)a(6)a(7)? Let me count letters: aabababbaaa = 11 chars. a-a-b-a-b-a-b-b-a-a-a: a=7? No. Let me be careful: a,a,b,a,b,a,b,b,a,a,a. a's: pos1,2,4,6,9,10,11 = 7 a's; b's: pos3,5,7,8 = 4 b's.
+- abaaabaababb: a,b,a,a,a,b,a,a,b,a,b,b = a=7, b=5
+
+Let me look for a substring pattern. Notice "aabb" appears in first ones. Let me check if every Set A string contains "aabb" as substring.
+
+- aabb: yes
+- baabb: yes (b-aabb)
+- aabbb: yes (aabb-b)
+- aaaabb: yes (aa-aabb)
+- bbaaabb: aaabb contains aabb? a-a-a-b-b → "aabb" at positions 2-5: aabb yes
+- abaaabb: aaabb → aabb yes
+- aaababbb: aaba... aaab... "aabb"? a-a-a-b-a-b-b-b: substrings: aaab, aaba, abab, babb... no "aabb"! Let me check: aaababbb. Looking for a-a-b-b: positions... aa-ab, ab-ab, no aabb. Hmm.
+
+So "aabb" isn't the property.
+
+**Set B:** none contain "aabb"? Let me verify Set A always has "aa" and "bb"?
+- Check "aa" present: all Set A have aa? aaababbb has aa yes. All seem to have "aa".
+- Check "bb": aabb yes, ababaaabb yes(bb), aabababbaaa yes(bb), abaaabaababb yes(bb). 
+
+**Set B** - does any have both "aa" and "bb"?
+- ab: no; ba: no; aa: has aa, no bb; aba: no; aab: aa no bb; bbaa: bb and aa → both! 
+
+So bbaa has both aa and bb but is in Set B. So that's not it.
+
+Let me reconsider: does Set A always contain "aabb" as a subsequence/substring? bbaa has bb before aa. Maybe property: "aa" comes before "bb" ... or contains "aabb" as **subsequence**.
+
+Check aaababbb as subsequence a-a-b-b: yes easily (aa then bb).
+- bbaa: subsequence aabb? need a...a...b...b with a's before b's. bbaa has a's only at end, no b after. So no.
+- All Set A contain subsequence "aabb"? Need two a's then two b's in order.
+
+Check Set B for "aabb" subsequence:
+- aababa: a,a,b,a,b,a - aa then b...b: aa(1,2) b(3) b(5) → aabb subsequence yes! But it's in Set B.
+
+Hmm. Let me try "aaabb" subsequence or count-based.
+
+Set A: every string has #a ≥ 2 and #b ≥ 2, and... check counts: perhaps #a ≥ #b? 
+- baabb: a=2,b=3 no.
+
+**Property: contains "aabb" as substring OR ...** Let me recheck aaababbb for aabb substring — no. But maybe I should recount aaababbb: could there be another form. Contains "abbb"→ has "abb". 
+
+Perhaps: every string contains "abb" as substring AND starts with a or has "aa"?
+
+**Answer:**
+
+Property: **Every string in Set A contains the subsequence "a a b b" (two a's followed later by two b's), with additionally the first a occurring before any... ** — but aababa (B) breaks this.
+
+Given constraints, the cleanest distinguishing property: **Set A strings contain "aabb" as a subsequence AND end in "b"**, while checking B... aababa ends in a. 
+
+**Property: Every string in Set A ends with "b", contains "aa", and has at least two b's** (equivalently contains subsequence aabb and ends in b). Set B strings either don't end in b or lack the "aa...bb" order.

@@ -1,0 +1,100 @@
+
+I need to find a property that distinguishes set A from set B.
+
+Let me look for patterns involving consecutive characters, particularly consecutive 1's.
+
+**Checking for "11" substring:**
+
+Set B strings:
+- 11 ✓ has 11
+- 110 ✓
+- 111 ✓
+- 0111 ✓
+- 1111 ✓
+- 1101 ✓
+- 0110 ✓
+- 01110 ✓
+- 010111 ✓
+- 011100 ✓
+- 011000 ✓
+- 110000 ✓
+- 001100 ✓
+- 000110 ✓
+- 111000 ✓
+- 001110 ✓
+- 000111 ✓
+- 0101110 ✓
+- 01011001 ✓
+- 11000010 ✓
+- 011100110 ✓
+- 1011110000 ✓
+- 0111101010 ✓
+- 00001010110 ✓
+
+All of set B contains "11"!
+
+**Checking set A for absence of "11":**
+
+- "" — no 11 ✓
+- 0 ✓
+- 1 ✓
+- 00 ✓
+- 01 ✓
+- 10 ✓
+- 011 — contains "11"? 0-1-1, yes it has 11! ✗
+
+Let me recheck 011. It has "11". So that breaks the rule.
+
+Let me reconsider. Maybe "no three consecutive 1's" (no "111"):
+
+Set A:
+- 011 — no 111 ✓
+- 1011 — 1-0-1-1, no 111 ✓
+- 01011, 01010, 10101, 10011, 100100, 0100011 (has 11), etc.
+
+Check set B for "111":
+- 11 — no 111 ✗
+
+That fails since 11 has no 111.
+
+Let me try **"00" and "11" both**... 
+
+Look at set B: all contain "11". Set A: 011 contains "11" but is in A. So "11" alone fails.
+
+**Reconsider:** maybe it's about consecutive 1's differently. Let me count max run of 1's.
+- Set A "011": max run of 1's = 2.
+- Set B "11": max run = 2.
+
+Both have run 2. Let me look at runs of consecutive 1's AND consecutive 0's together, or something about pattern.
+
+Let me check: does set A never contain "11" except at the end? 
+- 011: 11 at end ✓
+- 1011: 11 at end ✓
+- 10011: 11 at end ✓
+- 0100011: 11 at end ✓
+- 010111... wait that's set B.
+
+Check all A with "11": 011, 1011, 10011, 0100011 — all end in 11.
+Set B: 11 ends in 11 but is in B. Hmm, "11" ends in 11.
+
+Let me check "00" in set A: 00, 0100, 00100, 0101000, etc. Max run of 0's.
+
+**New idea — no "110" pattern (11 always at end)?** Set B all seem to have 11 followed by 0.
+- Set B "111": 111 followed by nothing, but internal 11 followed by 1.
+- Set A "011": 11 at very end, never followed by 0.
+
+Check set A: whenever "11" occurs, it's at the end (not followed by 0 or more 1s... just at end).
+- 011 ✓, 1011 ✓, 10011 ✓, 0100011 ✓ — all end in 11, and no "11" appears elsewhere.
+
+Set B: does every string contain "11" NOT at the end, i.e., "110" or "111"?
+- 11: it's at end though... but 11 is in B. 
+
+Hmm, but "11" would be allowed in A by "11 at end" rule. Yet it's in B. But 011 is in A.
+
+The difference: maybe **"11" must be preceded by a 0**? "011" ok, "1011" the 11 preceded by 0. "11" alone — 11 preceded by nothing/start.
+
+**Property:** A string is in A if and only if it does not contain "111" and does not contain "110" (i.e., every occurrence of "11" is at the end of the string), AND the string contains no "11" at the start without a preceding character... 
+
+Simplest consistent statement: **The string contains "11" only as a suffix (and only once), never followed by another character; equivalently the string never contains "110" and never contains "111".**
+
+Property: **No two consecutive 1's are ever followed by another symbol — i.e., the string contains neither "110" nor "111" (so any "11" can only appear at the very end).**

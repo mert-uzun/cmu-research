@@ -1,0 +1,50 @@
+I'll analyze the strings in Set A and Set B to find the distinguishing property.
+
+Let me examine Set A strings:
+- "" (empty)
+- 10
+- 01
+- 0101
+- 1010
+- 0110
+- 011010
+- 100101
+- 10100110
+- 01100101
+
+Let me check counts of 0s and 1s:
+- "": 0 zeros, 0 ones
+- 10: 1 zero, 1 one
+- 01: 1 zero, 1 one
+- 0101: 2 zeros, 2 ones
+- 1010: 2 zeros, 2 ones
+- 0110: 2 zeros, 2 ones
+- 011010: 3 zeros, 3 ones
+- 100101: 3 zeros, 3 ones
+- 10100110: 4 zeros, 4 ones
+- 01100101: 4 zeros, 4 ones
+
+All Set A strings have **equal numbers of 0s and 1s**.
+
+Now checking Set B strings:
+- 0: 1 zero, 0 ones ✓ (unequal)
+- 1: 0 zeros, 1 one ✓ (unequal)
+- 010: 2 zeros, 1 one ✓ (unequal)
+- 110: 1 zero, 2 ones ✓ (unequal)
+- 0011: 2 zeros, 2 ones — **equal!** Need a finer property.
+
+So equal counts of 0s and 1s is necessary but not sufficient. Let me look more carefully.
+
+Let me check if every prefix has **#0s ≥ #1s** or some balance condition... Let me try checking if the string equals its own complement-reversal, or look at another structural property.
+
+Let me check if strings in Set A are such that **no prefix has more 1s than 0s AND no prefix has more 0s than 1s** — i.e., running balance never goes to ±2? No...
+
+Let me check: in Set A, does every prefix have |#0s - #1s| ≤ 1? Check "0110": prefixes: 0(diff=1), 01(0), 011(-1), 0110(0). Yes. Check "011010": 0,01,011,0110,01101,011010 → diffs: 1,0,-1,0,-1,0. Yes, always within [-1,1].
+
+Check Set B "0011": prefixes: 0(1), 00(2)... diff=2. ✓ excluded.
+Check "1100": 1(-1),11(-2)... ✓ excluded.
+Check "011011": 0,01,011,0110,01101,011011 → 1,0,-1,0,-1,-2. ✓ excluded.
+Check "010001": 1,0,1,2... ✓ excluded.
+Check "01110010": need to verify it's not in A — diffs: 1,0,-1,-2... ✓ excluded.
+
+**Property:** Every string in Set A has equal numbers of 0s and 1s, and in every prefix of the string, the counts of 0s and 1s differ by at most 1 (i.e., the running difference between #0s and #1s never exceeds 1 in absolute value).

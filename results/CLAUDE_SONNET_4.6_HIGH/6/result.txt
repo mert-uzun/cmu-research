@@ -1,0 +1,72 @@
+I need to find a property common to all strings in set A that doesn't apply to any string in set B.
+
+Let me analyze the strings in set A:
+
+- `0011` - 2 zeros, 2 ones
+- `1100` - 2 zeros, 2 ones
+- `10010` - 3 zeros, 2 ones
+- `10110` - 2 zeros, 3 ones
+- `100110` - 3 zeros, 3 ones
+- `110100` - 3 zeros, 3 ones
+- `0010111` - 3 zeros, 4 ones
+- `0110101` - 3 zeros, 4 ones
+- `00101011` - 4 zeros, 4 ones
+- `10101010` - 4 zeros, 4 ones
+
+Count of zeros and ones seem close but not always equal. Let me think differently.
+
+Let me check if the number of 0s equals the number of 1s... No, `10010` has 3 zeros and 2 ones.
+
+Let me try checking if each string has equal numbers of 0s and 1s **or** differs by one... Not a clean property.
+
+Let me look at this differently — maybe it's about substrings or runs. Let me count the number of "01" and "10" transitions.
+
+Let me try: does the number of 0s equal the number of 1s, rounded? Let me recount:
+- `10010`: 1,0,0,1,0 → three 0s, two 1s → length 5
+- `10110`: 1,0,1,1,0 → two 0s, three 1s → length 5
+
+Hmm. Let me check if |#zeros - #ones| ≤ 1... that fits all set A strings. Check set B:
+- `10`: 1 zero, 1 one ✓ — but this should NOT have the property.
+
+Let me try another approach. Maybe it's about the string having **equal numbers of "01" and "10" as substrings (adjacent pairs)**?
+
+For `0011`: pairs: 00,01,11 → one "01", zero "10" — not equal.
+
+Let me try: number of 0→1 transitions equals number of 1→0 transitions (i.e., the string starts and ends with the same character).
+
+- `0011`: starts 0, ends 1 — NO, different.
+
+Let me try: **the number of 0s is even AND the number of 1s is even**:
+- `0011`: 2 zeros, 2 ones ✓
+- `10010`: 3 zeros — NO.
+
+Let me try: **total length is even**:
+- Set A lengths: 4,4,5,5,6,6,7,7,8,8 — mixed even and odd. No.
+
+Let me check **#zeros - #ones = even number** (same parity):
+- `0011`: 2,2 same parity ✓; `10010`: 3,2 different ✗
+
+Hmm. Let me try: **the string contains equal numbers of "01" and "10" as (possibly overlapping) substrings**:
+- `0011`: 01 appears once, 10 appears zero times ✗
+
+Let me try: **number of 0s equals number of 1s** more carefully:
+- `10010`: 3 zeros, 2 ones — unequal. So that's not it.
+
+Let me revisit: maybe the property involves **sorting** — each string in A is an anagram of another string in A that is its reverse or complement?
+
+Notice: `0011` and `1100` are reverses. `10010` reversed is `01001`. `10110` reversed is `01101`. 
+
+Let me check if each string in A is a **rotation** of another. Or maybe: **the string has equal number of 0-blocks and 1-blocks** (runs)?
+
+- `0011`: runs = 00, 11 → 1 zero-run, 1 one-run ✓
+- `10010`: runs = 1,00,1,0 → 2 zero-runs, 2 one-runs ✓
+- `10110`: 1,0,11,0 → 2 zero-runs, 2 one-runs ✓
+- `100110`: 1,00,11,0 → 2 zero-runs, 2 one-runs ✓
+- `0010111`: 00,1,0,111 → 2 zero-runs, 2 one-runs ✓
+- `10101010`: alternating → 4 zero-runs, 4 one-runs ✓
+
+Check set B:
+- `10`: 1,0 → 1 each ✓ — fails to exclude.
+- `101`: 1,0,1 → 1 zero-run, 2 one-runs ✓ excluded ✓
+
+**Property: The number of runs of 0s equals the number of runs of 1s.**

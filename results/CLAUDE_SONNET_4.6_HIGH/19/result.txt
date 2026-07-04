@@ -1,0 +1,84 @@
+I need to find the common property of strings in Set A that distinguishes them from Set B.
+
+Let me analyze the strings in Set A:
+- "" (empty string)
+- 0, 00, 000, 0000 (strings of only 0s)
+- 010, 101, 0110, 1001, 00100, 01000, 01010, 010010, 0010100, 01100110
+
+Let me check if these strings are palindromes:
+- "" → palindrome ✓
+- 0 → palindrome ✓
+- 00 → palindrome ✓
+- 000 → palindrome ✓
+- 0000 → palindrome ✓
+- 010 → palindrome ✓
+- 101 → palindrome ✓
+- 0110 → palindrome ✓
+- 1001 → palindrome ✓
+- 00100 → palindrome ✓
+- 01000 → reversed is 00010 ✗
+
+Hmm, 01000 is not a palindrome. Let me reconsider.
+
+Let me check Set B:
+- 01 → not palindrome
+- 10 → not palindrome
+- 100 → not palindrome
+- 001 → not palindrome
+- 1010 → not palindrome
+
+Let me think about another property. Let me count 1s and 0s:
+- 01000: three 0s and one 1... wait, four 0s and one 1. Not a palindrome.
+
+Let me look at another property. Maybe related to the number of 1s:
+- "" → zero 1s (even)
+- 0 → zero 1s (even)
+- 00, 000, 0000 → zero 1s (even)
+- 010 → one 1 (odd)
+
+So not "even number of 1s."
+
+Let me reconsider palindromes - maybe I made an error:
+- 01000: 0,1,0,0,0 → reversed: 0,0,0,1,0 = 00010 ≠ 01000. Not a palindrome.
+
+Let me check if the string or any rotation/shift is a palindrome... or maybe it's about being a palindrome OR having only 0s?
+
+Wait, let me check if every string in A is a palindrome when ignoring leading/trailing zeros... No.
+
+Let me re-examine: could the property be that the string equals its own reversal complement? In binary, complement flips 0s and 1s.
+- 01000 reversed complement: complement is 10111, reversed is 11101. No.
+
+What about: the string is equal to its reverse? Let me recheck 01000:
+0-1-0-0-0. Reverse: 0-0-0-1-0 = 00010. Not equal.
+
+What if it's about even number of 1s?
+- 010 → one 1 (odd) — fails
+
+Let me try: the string has no two consecutive 1s... 
+- 0110 has "11" → fails
+
+What if the string is a palindrome OR consists entirely of 0s? 
+- 01000 is neither...
+
+Let me recount 01000: digits are 0,1,0,0,0. Reversed: 0,0,0,1,0. Not a palindrome.
+
+What about the number of 1s being even?
+- 010: one 1 — odd. Fails.
+
+What if the string read as a binary number equals its bit-reversal (as a number of same length)?
+- 01010: reversed is 01010 — palindrome ✓
+- 01000: reversed is 00010 — not same ✗
+
+Hmm. Let me try: does the string contain equal numbers of "01" and "10" substrings (overlapping)?
+- 01000: 01,10,00,00 → one "01", one "10" → equal ✓
+- 010010: 01,10,00,01,10 → two "01", two "10" ✓
+- 0010100: 00,01,10,01,00 → two "01", one "10"... 
+
+Let me try: the string is a palindrome OR the number of "01" occurrences equals the number of "10" occurrences. Actually, this is equivalent to: the first character equals the last character.
+
+Check Set A: all strings either empty or start and end with the same character (or length 1).
+Check Set B: 01 (0≠1✗), 10 (1≠0✗), 100 (1≠0✗), 001(0≠1✗), 0111(0≠1✗), 1100(1≠0✗), 1010(1≠0✗), 01001(0≠1✗), 110010(1≠0✗)...
+
+All Set B strings start and end with different characters! And all Set A strings start and end with the same character (or are empty/single char).
+
+**Property: Every string in Set A is either empty, has length 1, or has its first character equal to its last character (i.e., the string starts and ends with the same symbol).**

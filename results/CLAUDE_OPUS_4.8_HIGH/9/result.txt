@@ -1,0 +1,47 @@
+
+I need to find a property that distinguishes set A from set B.
+
+Let me look at the lengths and character counts.
+
+**Set A:**
+- `a`: length 1
+- `c`: length 1
+- `ab`: length 2
+- `cab`: length 3
+- `bacb`: length 4
+- `cabacb`: length 6
+- `acbabca`: length 7
+- `bcabacbc`: length 8
+- `abacabacba`: length 10
+- `cbacabacbab`: length 11
+
+Let me count character occurrences and look for patterns. Let me check for repeated adjacent characters:
+
+**Set A** - checking consecutive equal characters:
+- `a`, `c`, `ab`, `cab`, `bacb`, `cabacb`, `acbabca`, `bcabacbc`, `abacabacba`, `cbacabacbab` — none have two identical adjacent characters.
+
+**Set B** - checking consecutive equal characters:
+- `aa`: has `aa`
+- `bb`: has `bb`
+- `bcc`: has `cc`
+- `acbb`: has `bb`
+- `ccaba`: has `cc`
+- `bcaabc`: has `aa`
+- `cbabbcc`: has `bb`, `cc`
+- `abcbaabc`: has `aa`
+- `acbabaccb`: has `cc`
+- `cbabccbacbb`: has `cc`, `bb`
+
+**Every string in Set B contains at least two identical adjacent characters, and every string in Set A has no two identical adjacent characters.**
+
+Let me verify Set A once more:
+- `bacb`: b-a-c-b, all adjacent pairs differ ✓
+- `cabacb`: c-a-b-a-c-b ✓
+- `acbabca`: a-c-b-a-b-c-a ✓
+- `bcabacbc`: b-c-a-b-a-c-b-c ✓
+- `abacabacba`: a-b-a-c-a-b-a-c-b-a ✓
+- `cbacabacbab`: c-b-a-c-a-b-a-c-b-a-b ✓
+
+All confirmed.
+
+**Property:** No two adjacent characters in the string are the same (the string contains no immediate repetition of a character).

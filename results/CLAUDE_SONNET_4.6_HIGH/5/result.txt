@@ -1,0 +1,68 @@
+I need to find a property common to all strings in set A that is not present in any string in set B.
+
+Let me analyze the strings in set A:
+- aabb
+- baabb
+- aabbb
+- aaaabb
+- bbaaabb
+- abaaabb
+- aaababbb
+- ababaaabb
+- aabababbaaa
+- abaaabaababb
+
+Let me look for the substring "aabb" in each:
+- aabb → contains "aabb" ✓
+- baabb → contains "aabb" ✓
+- aabbb → contains "aabb" ✓
+- aaaabb → contains "aabb" ✓
+- bbaaabb → contains "aabb" ✓
+- abaaabb → contains "aabb" ✓
+- aaababbb → "aaababbb" - let me check: aa-ab-ab-bb... does it contain "aabb"? a-a-b-a-b-b-b → no direct "aabb"... but wait: positions: a,a,b,a,b,b,b → "aabb" not present directly. Hmm.
+
+Let me reconsider. Maybe it's about containing "abb":
+- aabb → yes
+- baabb → yes
+- aabbb → yes (aabb substring? a,a,b,b,b → "aabb" at pos 1)
+- aaababbb → a,a,a,b,a,b,b,b → "abbb" yes, "abb" yes
+- aabababbaaa → contains "abb" ✓
+- abaaabaababb → contains "abb" ✓
+
+Now check set B for "abb":
+- ab → no
+- ba → no
+- aa → no
+- aba → no
+- aab → no
+- bbaa → no
+- abbaa → contains "abb"! ✗
+
+So "abb" doesn't work since "abbaa" is in set B.
+
+Let me think differently. Maybe the strings contain "aab" as a substring:
+- All set A strings: aabb✓, baabb✓, aabbb✓, aaaabb✓, bbaaabb✓, abaaabb✓, aaababbb→"aab" at pos 1✓? a,a,a,b... "aab"✓, ababaaabb→contains "aab"✓, aabababbaaa✓, abaaabaababb→"aab"✓
+
+Check set B:
+- ab→no, ba→no, aa→no, aba→no, aab→yes! "aab" is in set B ✗
+
+Let me try "aabb":
+- aaababbb: a,a,a,b,a,b,b,b → no "aabb" directly
+- Hmm.
+
+Let me try: the string contains "bb" preceded eventually by "aa" — i.e., contains both "aa" and "bb" as substrings:
+Set A: aabb✓, baabb✓, aabbb✓, aaaabb✓, bbaaabb✓, abaaabb✓, aaababbb✓, ababaaabb✓, aabababbaaa✓, abaaabaababb✓
+
+Set B: ab(no), ba(no), aa(no bb), aba(no), aab(no bb), bbaa(no aa? b,b,a,a → "aa"✓ and "bb"✓) — bbaa has both "aa" and "bb" ✗
+
+Let me try: every string in A contains "aab" as a subsequence... and ends with specific pattern.
+
+Let me try: contains "aabb" as a **subsequence**:
+- bbaa: b,b,a,a → need a,a,b,b in order → only a,a at end, no b after → no ✓ (not in A)
+- abbaa: a,b,b,a,a → a✓,b✓,b✓, but need another b after second a → no ✓
+
+Check all set B: ab(no), ba(no), aa(no), aba(no), aab(no), bbaa(no), abbaa(a,b,b,a,a→ subsequence aabb: a at 0, b at 1, b at 2, then need b after... no), aabababa, bababba, aabababa.
+
+All set A strings contain "aabb" as a subsequence — let me verify aaababbb: a,a,a,b,a,b,b,b → a,a,b,b ✓
+
+**Property: Every string in set A contains "aabb" as a subsequence (i.e., there exist indices i < j < k < l such that the characters at those positions are a, a, b, b respectively).**

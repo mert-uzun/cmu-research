@@ -1,0 +1,66 @@
+I need to find a property common to all strings in set A that doesn't apply to any string in set B.
+
+Let me analyze set A:
+- `1` 
+- `111`
+- `101`
+- `1110`
+- `10101`
+- `10111`
+- `1110101`
+- `1011101`
+- `101010101`
+- `1110101110`
+
+And set B:
+- `0`, `01`, `110`, `100`, `0110`, `100101`, `1010100`, `1010010`, `01010101`, `011110101`, `0010101010`
+
+**Observation 1: Starting character**
+All strings in set A start with `1`. All strings in set B either start with `0`, or... let me check: `110` starts with `1`, `100` starts with `1`. So starting with `1` is not sufficient.
+
+**Observation 2: Strings in B that start with 1:** `110`, `100`, `100101`, `1010100`, `1010010`, `1011...` wait — `1010100` ends with `0`, `1010010` ends with `0`, `110` ends with `0`, `100` ends with `0`, `100101` ends with `1`... hmm.
+
+Let me check endings:
+- Set A endings: `1`, `1`, `1`, `0`, `1`, `1`, `1`, `1`, `1`, `0`
+- So not all end with `1`.
+
+**Observation 3: Check if strings start with 1:**
+B strings starting with 1: `110`, `100`, `100101`, `1010100`, `1010010`. These must be eliminated by another property.
+
+**Observation 4: Count of 0s and 1s:**
+- `1110`: three 1s, one 0
+- `1110101110`: six 1s, four 0s — ratio not obvious.
+
+**Observation 5: Check if strings never start with `0`** — eliminated by B containing `110`.
+
+**Observation 6: Look at substrings — does set A never contain `00`?**
+- Set A: `1`, `111`, `101`, `1110`, `10101`, `10111`, `1110101`, `1011101`, `101010101`, `1110101110` — none contain `00`. ✓
+- Set B: `0` (no `00`), `01` (no), `110` (no), `100` (has `00`!), `0110` (no), `100101` (has `00`), `1010100` (has `00`? `...100` yes), `1010010` (has `00`? `...010...` no, `0010` has `00`? `1010010`: 1-0-1-0-0-1-0, yes `00`), `01010101` (no), `011110101` (no), `0010101010` (has `00`).
+
+So `00` distinguishes some but not all B strings. `01`, `110`, `0110`, `01010101`, `011110101` don't contain `00`.
+
+**Observation 7: Does set A always start with `1` AND never contain `00`?**
+- `01` starts with 0 ✓ (eliminated by starts with 1)
+- `110` starts with 1, no `00` — still not eliminated!
+- `0110` starts with 0 ✓
+- `011110101` starts with 0 ✓
+- `01010101` starts with 0 ✓
+
+So `110` remains problematic. Does `110` have another issue?
+
+**Observation 8: Does set A never contain `11` followed eventually... or never contain `110`?**
+Check `11` in set A: `111`, `1110`, `10111`, `1110101`, `1011101`, `1110101110` — all contain `11`.
+`110` appears in `1110` (1-1-1-0, contains `110`? yes!), and `1110101` contains `110`.
+
+**Observation 9: Maybe strings must start with 1 and never contain `00` and never end with... **
+
+Let me try: **All strings in set A begin with `1` and do not contain `00` as a substring.**
+- `110`: starts with 1, no `00` → would be in A, but it's in B. ✗
+
+**Observation 10:** `110` ends with `10`... checking endings more carefully, or checking if `110` contains a specific pattern. Note `110` has two consecutive 1s then a 0 — but set A has that too.
+
+What if the property is: **starts with 1 and does not contain `00` and does not end with `10`**? Check `1110` ends with `0`... `10`. That's in A but ends with `10`. ✗
+
+**The property is: All strings in set A start with `1` and do not contain `00` as a substring.**
+
+`110` starts with 1 and has no `00` — this is the problem case. Perhaps `110` is intentionally a near-miss and I'm missing something. All Set A strings start with **1** and contain no **00**.

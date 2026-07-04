@@ -1,0 +1,8 @@
+Based on the provided sets, the common property of all strings in Set A is:
+
+**If a string contains the letter 'b', it does not end with 'aa'.**
+
+### Formal Description:
+A string $w \in \{a, b\}^*$ is in Set A if and only if it does not have a suffix of the form $b a^k$ where $k \geq 2$. 
+
+This means that if $w$ contains at least one 'b', the number of consecutive 'a's at the very end of the string must be at most 1.

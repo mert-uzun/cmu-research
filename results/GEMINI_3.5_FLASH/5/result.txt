@@ -1,0 +1,10 @@
+**Property:**
+
+Each string in Set A contains the substring `aa` followed by the substring `bb` (with zero or more characters between them). 
+
+**Formal Description:**
+Using regular expressions, the property can be defined as matching the pattern:
+$$\Sigma^* \text{aa} \Sigma^* \text{bb} \Sigma^*$$
+where $\Sigma = \{a, b\}$. 
+
+In other words, the string must contain at least one occurrence of the substring `aa` that appears before at least one occurrence of the substring `bb`. None of the strings in Set B satisfy this condition (either they lack one of the substrings, or, as in `bbaa` and `abbaa`, the `bb` occurs before the `aa`).

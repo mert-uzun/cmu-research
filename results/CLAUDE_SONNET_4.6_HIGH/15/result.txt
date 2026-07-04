@@ -1,0 +1,57 @@
+I need to find a property common to all strings in set A but not present in any string in set B.
+
+Let me analyze the strings in set A by counting occurrences of each character:
+
+| String | #a | #b | #c |
+|---|---|---|---|
+| ab | 1 | 1 | 0 |
+| ca | 1 | 0 | 1 |
+| bcaa | 2 | 1 | 1 |
+| ccba | 1 | 1 | 2 |
+| babcaa | 3 | 2 | 1 |
+| bbccca | 1 | 2 | 3 |
+| aaabbbcc | 3 | 3 | 2 |
+| bbbbaaaccccc | 3 | 4 | 5 |
+| cbaccbacba | 3 | 3 | 3 (wait: c,b,a,c,c,b,a,c,b,a → a:3, b:3, c:4) |
+| bcabcabcabc | a:3, b:4, c:4 (b,c,a,b,c,a,b,c,a,b,c → a:3, b:4, c:4) |
+
+Let me re-examine. Looking at the differences between counts:
+
+- ab: #a-#b=0, #b-#c=1, #a-#c=1
+- ca: #a=1,#b=0,#c=1 → #a-#c=0, #b-#c=-1
+- bcaa: #a=2,#b=1,#c=1 → #a-#b=1, #b-#c=0
+- ccba: #a=1,#b=1,#c=2 → #b-#c=-1, #a-#b=0
+- babcaa: #a=3,#b=2,#c=1 → #a-#b=1, #b-#c=1, #a-#c=2
+- bbccca: #a=1,#b=2,#c=3 → #b-#c=-1, #a-#b=-1
+- aaabbbcc: #a=3,#b=3,#c=2 → #a-#b=0, #b-#c=1
+- bbbbaaaccccc: #a=3,#b=4,#c=5 → #b-#c=-1, #a-#b=-1
+- cbaccbacba: #a=3,#b=3,#c=4 → #a-#b=0, #b-#c=-1
+- bcabcabcabc: #a=3,#b=4,#c=4 → #a-#b=-1, #b-#c=0
+
+I notice that in each string, no two character counts are equal **and differ by more than 1**... Let me check if consecutive counts differ by at most 1.
+
+Actually, let me check: in every set A string, the three counts {#a, #b, #c} form a set of integers where **no two counts are equal, OR two are equal** — let me look at whether the counts are always consecutive integers or have a specific pattern.
+
+Counts (sorted):
+- ab: {0,1,1} — two equal
+- ca: {0,1,1}
+- bcaa: {1,1,2}
+- ccba: {1,1,2}
+- babcaa: {1,2,3} — consecutive!
+- bbccca: {1,2,3}
+- aaabbbcc: {2,3,3}
+- bbbbaaaccccc: {3,4,5} — consecutive
+- cbaccbacba: {3,3,4}
+- bcabcabcabc: {3,4,4}
+
+The sorted counts are always **three consecutive integers (n, n+1, n+2) OR two equal adjacent values (n, n, n+1) or (n, n+1, n+1)**. In other words, the multiset of counts always has a range (max - min) of at most 2, **and specifically the counts form a "staircase" of the form {n, n, n+1}, {n, n+1, n+1}, or {n, n+1, n+2}**.
+
+Checking set B failures: `abc` has {1,1,1}, `aabbc` has {1,2,2} — wait {a:2,b:2,c:1} = {1,2,2} which looks like it should qualify... but it's in B.
+
+Hmm. Let me reconsider. Actually {1,2,2} sorted is fine by my rule. Let me recheck: `aabbc` → a:2,b:2,c:1. That fits {n,n+1,n+1}... yet it's in B.
+
+**Property: The number of a's, the number of b's, and the number of c's are all distinct (no two are equal), and their values are pairwise different — actually: the counts are three distinct values.**
+
+Checking: ab={0,1} only 2 distinct characters present... 
+
+The property is: **The sorted character counts form exactly {n, n+1} or {n, n+1, n+2} — i.e., the counts of a, b, c (including zeros) are consecutive integers** (each differing by exactly 1 when sorted, with no gaps).

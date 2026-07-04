@@ -1,0 +1,61 @@
+I need to find the common property of strings in Set A that distinguishes them from Set B.
+
+Let me analyze the strings in Set A:
+
+- `a` - length 1
+- `c` - length 1
+- `ab` - length 2
+- `cab` - length 3
+- `bacb` - length 4
+- `cabacb` - length 6
+- `acbabca` - length 7
+- `bcabacbc` - length 8
+- `abacabacba` - length 10
+- `cbacabacbab` - length 11
+
+Let me check for palindrome-like properties or reversal relationships.
+
+Let me check if each string, when reversed, gives a related string:
+- `a` reversed = `a`
+- `ab` reversed = `ba`
+- `cab` reversed = `bac`
+
+Let me try looking at character counts:
+- `a`: a=1, b=0, c=0
+- `c`: a=0, b=0, c=1
+- `ab`: a=1, b=1, c=0
+- `cab`: a=1, b=1, c=1
+- `bacb`: a=1, b=2, c=1
+- `cabacb`: a=2, b=2, c=2
+- `acbabca`: a=3, b=2, c=2 — wait, a=3, b=2, c=2
+- `bcabacbc`: a=2, b=3, c=3
+- `abacabacba`: a=5, b=3, c=2 — hmm
+- `cbacabacbab`: a=3, b=4, c=... c=3? c-b-a-c-a-b-a-c-b-a-b: a=4, b=4, c=3
+
+Let me try checking if strings have all distinct consecutive characters (no two adjacent characters the same):
+- `a`: trivially yes
+- `c`: yes
+- `ab`: yes
+- `cab`: yes
+- `bacb`: yes
+- `cabacb`: c-a-b-a-c-b: yes
+- `acbabca`: a-c-b-a-b-c-a: b-a-b has no repeats adjacent... yes
+- `bcabacbc`: b-c-a-b-a-c-b-c: b-c at end, yes all different adjacent
+- `abacabacba`: a-b-a-c-a-b-a-c-b-a: yes, no adjacent repeats
+- `cbacabacbab`: c-b-a-c-a-b-a-c-b-a-b: yes
+
+Now Set B:
+- `aa`: a-a — adjacent repeat! ✓
+- `bb`: repeat ✓
+- `bcc`: c-c repeat ✓
+- `acbb`: b-b repeat ✓
+- `ccaba`: c-c repeat ✓
+- `bcaabc`: a-a repeat ✓
+- `cbabbcc`: b-b and c-c ✓
+- `abcbaabc`: a-a repeat ✓
+- `acbabaccb`: a-c-b-a-b-a-c-c-b: c-c repeat ✓
+- `cbabccbacbb`: b-c-c and b-b repeats ✓
+
+All Set B strings have at least one pair of adjacent identical characters, while all Set A strings have no two adjacent identical characters.
+
+**Property: No two adjacent characters in the string are the same (i.e., for every consecutive pair of characters, they are distinct). Equivalently, the string contains no two identical characters next to each other.**

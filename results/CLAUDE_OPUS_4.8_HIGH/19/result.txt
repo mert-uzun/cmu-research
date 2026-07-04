@@ -1,0 +1,92 @@
+
+I need to find the property common to all strings in set A.
+
+Let me examine set A strings:
+- "" (empty)
+- 0, 00, 000, 0000
+- 010, 101
+- 0110, 1001
+- 00100, 01000, 01010
+- 010010
+- 0010100
+- 01100110
+
+Let me check if these are palindromes:
+- "" → yes
+- 0 → yes
+- 00 → yes
+- 000 → yes
+- 0000 → yes
+- 010 → yes
+- 101 → yes
+- 0110 → yes
+- 1001 → yes
+- 00100 → yes
+- 01000 → reverse is 00010 → NO
+
+So 01000 is not a palindrome. Let me reconsider.
+
+Let me count the 1's in each set A string:
+- "" → 0 ones
+- 0 → 0
+- 00 → 0
+- 000 → 0
+- 0000 → 0
+- 010 → 1
+- 101 → 2
+- 0110 → 2
+- 1001 → 2
+- 00100 → 1
+- 01000 → 1
+- 01010 → 2
+- 010010 → 2
+- 0010100 → 2
+- 01100110 → 4
+
+Number of 1's: 0,0,0,0,0,1,2,2,2,1,1,2,2,2,4. Mixed, not consistent parity.
+
+Let me check set B number of 1's:
+- 01 → 1, 10 → 1, 100 → 1, 001 → 1, 0111 → 3, 1100 → 2, 1010 → 2, 01001 → 2, 110010 → 3, 0010001 → 2, 00110001 → 3, 10001110 → 4, 001011101 → 5, 1011010100 → 5, 01011101011 → 7
+
+Not clean parity either. Let me think about positions of 1's.
+
+Let me consider treating each 1 as position. Look at "1"s positions and check something like consecutive 1s must be even distance apart.
+
+Let me look at the 1's positions (0-indexed) in set A:
+- 010 → {1}
+- 101 → {0,2}
+- 0110 → {1,2}
+- 1001 → {0,3}
+- 00100 → {2}
+- 01000 → {1}
+- 01010 → {1,3}
+- 010010 → {1,4}
+- 0010100 → {2,4}
+- 01100110 → {1,2,5,6}
+
+Gaps between consecutive 1s:
+- 101: gap 2
+- 0110: gap 1
+- 1001: gap 3
+- 01010: gap 2
+- 010010: gap 3
+- 0010100: gap 2
+- 01100110: gaps 1, 3, 1
+
+No consistency there. Let me try: number of 0's between... Actually let me check parity of positions of 1's or count of 0's.
+
+Let me count 0's in set A: all have... 
+- 010→2, 101→1, 0110→2, 1001→2, 00100→4, 01010→3.
+Mixed.
+
+Let me try: replacing "1" pairs. Maybe interpret as: blocks of 1's have even length OR... In 01000 there's a single 1. In 0110 there's "11". 
+
+Let me try treating the string as: every maximal run of 1s... 010(run1), 101(runs 1,1), 0110(run2), 1001(run 1,1).  Mixed.
+
+Let me check if number of "01" equals number of "10" (i.e., balanced transitions) — actually every string starting and ending with same char has equal 01 and 10 counts. Check set B: 01 (starts 0 ends 1, differ). Many B strings start/end differently. Check A: 101 starts 1 ends 1 ✓. 01000 starts 0 ends 0 ✓. All A strings start and end with the same character!
+
+Check A: ""(trivial), 0✓,00✓,000✓,0000✓,010✓,101✓,0110✓,1001✓,00100✓,01000✓,01010✓,010010✓,0010100✓,01100110✓. All start and end with same character.
+
+Check B: 01✗,10✗,100✗,001✗,0111✗,1100✗,1010✗,01001✓... wait 01001 starts 0 ends 1 ✗. 110010 starts1 ends0✗. All B start/end differently.
+
+**Property:** Every string in set A either is empty or begins and ends with the same character (0…0 or 1…1). Equivalently, the first and last symbols are identical.

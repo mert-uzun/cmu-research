@@ -1,0 +1,80 @@
+I need to find a property common to all strings in set A, that no string in set B has.
+
+Let me analyze the strings in set A:
+
+- `aa` - length 2
+- `cc` - length 2
+- `bab` - length 3
+- `cabc` - length 4
+- `baaac` - length 5
+- `accaab` - length 6
+- `acabaa` - length 6
+- `cabcaab` - length 7
+- `cabccabba` - length 9
+- `bacabacc` - length 8
+
+Let me check if they are palindromes:
+- `aa` → reverse: `aa` ✓
+- `cc` → reverse: `cc` ✓
+- `bab` → reverse: `bab` ✓
+- `cabc` → reverse: `cbac` ✗
+
+Not palindromes. Let me think differently.
+
+Let me check if each string contains every character that appears in it at least twice:
+- `aa`: a appears 2 times ✓
+- `cc`: c appears 2 times ✓
+- `bab`: b appears 2, a appears 1 ✗
+
+Let me try another approach. Check if each string can be split into two halves that are anagrams (same characters):
+- `aa`: `a` | `a` ✓
+- `cc`: `c` | `c` ✓
+- `bab`: not even length... hmm
+
+Let me check if the string is a concatenation of a string with its anagram (or itself):
+- `bab`: `b` + `ab`? or `ba` + `b`?
+
+Let me try: does every character appear an even number of times?
+- `aa`: a×2 ✓
+- `cc`: c×2 ✓
+- `bab`: b×2, a×1 ✗
+
+Let me try: is the string the concatenation of some string s with the reverse of s (i.e., s + reverse(s)), or some rotation thereof?
+
+- `aa` = `a` + `a` (reverse of `a`) ✓
+- `cc` = `c` + `c` ✓
+- `bab` = `ba` + `b`? reverse of `ba` is `ab` ✗. Or `b` + `ab`? reverse of `b` is `b` ✗
+- `cabc` = `ca` + `bc`? reverse of `ca` is `ac` ✗. `cab` + `c`? reverse of `cab` is `bac` ✗
+
+Let me check if the string contains another string from the set as a subsequence... that seems too complex.
+
+Let me re-examine set B — all strings in set B have length ≤ 3 and seem to be short. But set A also has short strings like `aa`, `cc`, `bab`.
+
+Let me check: does the string contain at least one of each character that appears in it, appearing more than once? No, `bab` has a×1.
+
+Let me check if the string is a concatenation of a string with its reverse:
+- `bacabacc`: `baca` + `bacc`? reverse of `baca` = `acab` ✗. `bacab` + `acc`? 
+- `cabccabba`: length 9... `cabcc` + `abba`? 
+
+Wait, let me try: does the string contain a repeated substring pattern? 
+
+Let me check if every string in A contains a as a substring that appears... 
+
+Let me try: the string has the same number of each character when read from left or some symmetry in counts by halves.
+
+**New approach**: Check if the string contains a non-empty string repeated (i.e., is it a repetition or contains a square)?
+- `aa` = `a`+`a` ✓
+- `cc` = `c`+`c` ✓
+- `bab`: `b`+`ab`? `ba`+`b`? No square... hmm
+- `cabccabba`: contains `cabc`+`cabba`... contains `cc`? No. Contains `abcab`... `cabb`...
+
+Actually `bab` contains no repeated adjacent substring. Let me try: **every string in A contains `aa`, `bb`, or `cc` as a substring**, or more generally contains any repeated character.
+- `bab`: no repeated adjacent characters ✗
+
+**Property: Each string in set A is a string that reads the same forwards and backwards when the characters are sorted** — no that's trivial.
+
+Let me try: every string in A has even length OR contains a character appearing at least twice adjacently... 
+
+After more careful analysis: **Every string in set A contains at least one character that appears more than once, AND no string in set B has all characters appearing more than once** — checking set B: `acb`,`bca`,`cab`,`cba` all have each char once, and strings like `a`,`b`,`c`,`ab` clearly don't repeat.
+
+**Property: Every string in set A has at least one character that appears more than once (i.e., no string in A has all distinct characters).**

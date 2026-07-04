@@ -1,0 +1,75 @@
+I need to find a property common to all strings in Set A that doesn't apply to any string in Set B.
+
+Let me analyze the strings in Set A:
+- 011
+- 110
+- 01001
+- 001111
+- 10010
+- 0011011
+- 11110
+- 100001
+- 0111111
+- 1000101
+- 001001000
+- 01011010
+
+Let me count 0s and 1s:
+- 011: two 1s, one 0
+- 110: two 1s, one 0
+- 01001: two 1s, three 0s
+- 001111: four 1s, two 0s
+- 10010: two 1s, three 0s
+- 0011011: four 1s, three 0s
+- 11110: four 1s, one 0
+- 100001: two 1s, four 0s
+- 0111111: six 1s, one 0
+- 1000101: three 1s, four 0s
+- 001001000: two 1s, seven 0s
+- 01011010: three 1s, five 0s
+
+Number of 1s: 2, 2, 2, 4, 2, 4, 4, 2, 6, 3, 2, 3
+Number of 0s: 1, 1, 3, 2, 3, 3, 1, 4, 1, 4, 7, 5
+
+1s are even except 1000101 and 01011010... Let me try another approach.
+
+Let me check if strings have more 1s than 0s, or vice versa... no clear pattern.
+
+Let me try: number of 1s is even:
+- 011: 2 ✓, 110: 2 ✓, 01001: 2 ✓, 001111: 4 ✓, 10010: 2 ✓, 0011011: 4 ✓, 11110: 4 ✓, 100001: 2 ✓, 0111111: 6 ✓, 1000101: 3 ✗
+
+That fails. Let me try number of 0s:
+- 011:1, 110:1, 01001:3, 001111:2, 10010:3, 0011011:3, 11110:1, 100001:4, 0111111:1, 1000101:4, 001001000:7, 01011010:5
+
+Not even. Let me check Set B for number of 1s:
+- 010:1, 100:1, 0101:2, 1010:2, 001010:2, 010011:3, 10111:4, 0011101:4, 011111:5, 110111:5, 0111100:4
+
+Let me try: the number of 1s minus the number of 0s:
+Set A: 1, 1, -1, 2, -1, 1, 3, -2, 5, -1, -5, -2
+Set B: -1, -2, 0, 0, -2, 1, 2, 1, 3, 3, 1
+
+Hmm, let me try if the string contains "11" or "00" as a substring... checking Set B:
+- 010: no 11, no 00 ✓(not in A)
+- 100: has 00 ✗
+
+Let me try: every run of 0s or 1s has length ≥ 2... 
+Set A - 011: 0(1),11(2)... fails (single 0).
+
+Let me try: the number of 1s is even OR the number of 0s is odd... 
+
+Let me check if strings **start and end with different digits**:
+- 011: 0...1 ✓, 110: 1...0 ✓, 01001: 0...1 ✓, 001111: 0...1 ✓, 10010: 1...0 ✓, 0011011: 0...1 ✓, 11110: 1...0 ✓, 100001: 1...1 ✗
+
+Let me try: the total length is odd:
+Set A lengths: 3,3,5,6,5,7,5,6,7,7,9,8 — 6 is even, fails.
+
+Let me revisit: **the number of 1s is even**:
+1000101 has 1s at positions: 1,4,6 → three 1s. Hmm. But all others have even 1s. And Set B: 0101(2),1010(2),001010(2),10111(4),0011101(4),011111(5),110111(5),0111100(4) — several have even 1s.
+
+**The property is: the string contains an even number of 1s.**
+
+Wait — 1000101 has three 1s and 01011010 has three 1s, breaking this. Let me recount 01011010: 0,1,0,1,1,0,1,0 → four 1s ✓. And 1000101: 1,0,0,0,1,0,1 → three 1s ✗.
+
+**The number of 1s is even** — fails for 1000101.
+
+**The property is: the string has an even number of 1s.**

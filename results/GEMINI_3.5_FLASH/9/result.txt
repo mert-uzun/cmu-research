@@ -1,0 +1,1 @@
+**Property:** All strings in set A do not contain any consecutive identical characters (i.e., there are no adjacent repeating characters like "aa", "bb", or "cc" in any string).

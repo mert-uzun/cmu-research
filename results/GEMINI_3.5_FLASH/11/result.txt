@@ -1,0 +1,7 @@
+Based on the provided sets, the common property that all strings in Set A share (and which none of the strings in Set B have) can be expressed as:
+
+**Every 'a' in the string is adjacent to at least one 'b'.**
+
+### Formal / Alternative Descriptions:
+* **Substring constraint:** The string does not contain the substring `aaa`, does not start with `aa`, and does not end with `aa`.
+* **Block-length constraint:** Any contiguous block of `a`'s has a length of at most 2, and any block of `a`'s at the very beginning or the very end of the string has a length of at most 1.

@@ -1,0 +1,75 @@
+I need to find a property common to all strings in set A but not present in any string in set B.
+
+Let me analyze the strings carefully.
+
+**Set A:**
+- `a`
+- `b`
+- `aa`
+- `bb`
+- `aabb`
+- `aaabb`
+- `baabbb`
+- `aababba`
+- `abaababb`
+- `aabaaabbb`
+- `abaabaabb`
+- `abaaabababb`
+
+**Set B:**
+- `bbaa`
+- `bbaaa`
+- `bbbaa`
+- `abbbaa`
+- `babbaaa`
+- `bbbabaa`
+- `abbabaaa`
+- `babbbabaa`
+- `abbbbaaaa`
+- `bbbbaaabaa`
+
+Let me look at the endings. Set B strings all end in `a` or `aa`. Set A strings end in `a`, `b`, `aa`, `bb`, `bb`, `b`, `bb`, `a`, `b`, `bb`, `b`, `b` — mixed endings, so that's not it.
+
+Let me count a's and b's:
+- Set B: `bbaa` (2a,2b), `bbaaa`(3a,2b), `bbbaa`(2a,3b), `abbbaa`(2a,3b+... wait: 2a,3b), `babbaaa`(3a,3b), `bbbabaa`(3a,3b), `abbabaaa`(4a,3b)...
+
+Hmm, let me look at what comes **after** the last `b` — i.e., the trailing a's. All Set B strings end with at least one `a` after the final `b`. Set A strings: `a`(no b), `b`(ends b), `aa`(no b), `bb`(ends b), `aabb`(ends bb), `aaabb`(ends bb), `baabbb`(ends bbb), `aababba`(ends a — wait, `aababba` ends in `a`).
+
+So `aababba` ends in `a`. But it's in Set A. Let me reconsider.
+
+Let me check if strings in Set B have **more a's than b's at the end** or if b's never come after a's past a certain point... 
+
+Let me check: does every string in Set B end with `aa` (at least two a's at the end)?
+- `bbaa` ✓, `bbaaa` ✓, `bbbaa` ✓, `abbbaa` ✓, `babbaaa` ✓, `bbbabaa` ✓, `abbabaaa` ✓, `babbbabaa` ✓, `abbbbaaaa` ✓, `bbbbaaabaa` ✓
+
+All Set B strings end with at least **two a's**.
+
+Now Set A strings — do none of them end with two or more a's?
+- `a` — single a ✓
+- `b` ✓
+- `aa` — ends with two a's ✗
+
+That doesn't work either.
+
+Let me try another angle. Looking at number of a's minus b's:
+- Set A: a(1,0→+1), b(0,1→-1), aa(2,0→+2), bb(0,2→-2), aabb(2,2→0), aaabb(3,2→+1), baabbb(2,3→-1), aababba(4,3→+1), abaababb(4,4→0), aabaaabbb(4,4→... wait: a,a,b,a,a,a,b,b,b = 4a,4b... no: aabaaabbb: a,a,b,a,a,a,b,b,b = 5a,4b→+1? Hmm let me count: a-a-b-a-a-a-b-b-b = 5a, 4b → +1)
+
+Set B: bbaa(2a,2b→0), bbaaa(3a,2b→+1), bbbaa(2a,3b→-1)...
+
+This doesn't cleanly separate them.
+
+Let me reconsider by looking at whether b's ever follow a's — i.e., whether there's a `b` after an `a` in Set B strings... All Set B strings have b's appearing before a's at the end, but let me check if Set A strings have the property that **a's never appear after all b's are done** — i.e., the string ends with b's or has b's after the last a.
+
+Set B strings all end in `a`. Set A: checking last character — `a`,`b`,`aa`(a),`bb`(b),`aabb`(b),`aaabb`(b),`baabbb`(b),`aababba`(a),`abaababb`(b),`aabaaabbb`(b),`abaabaabb`(b),`abaaabababb`(b). So Set A has strings ending in both a and b.
+
+**The property: the number of a's does not exceed the number of b's by more than 1, and... **
+
+Let me try: **no two consecutive a's appear after the last b**... All Set B strings end in `aa`. Set A: `aa` ends in `aa` but has no b at all.
+
+**Property: All strings in set A do not end with two or more consecutive a's (i.e., they do not have `aa` as a suffix), OR they contain no b's at all.**
+
+Checking Set A: `a`(no b✓), `b`✓, `aa`(no b✓), `bb`✓, `aabb`(ends bb✓), `aaabb`(ends bb✓), `baabbb`(ends bbb✓), `aababba`(ends a, has b — ends in single a✓), `abaababb`(ends b✓), `aabaaabbb`(ends bbb✓), `abaabaabb`(ends bb✓), `abaaabababb`(ends b✓). ✓ all pass.
+
+Checking Set B: all end in `aa` and contain b's — all fail. ✓
+
+**The property is: Either the string contains no b's, or it does not end with two or more consecutive a's (i.e., it does not end in "aa").**
