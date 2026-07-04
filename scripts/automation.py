@@ -1,4 +1,4 @@
-# This script automates the testing process with 9 following models:
+# This script automates the testing process with 10 following models:
 #
 # 1. Claude Sonnet 4.6 - High
 # 2. Claude Opus 4.8 - High
@@ -7,8 +7,9 @@
 # 5. Gemini 3.1 Pro
 # 6. ChatGPT 5.5 - High
 # 7. Grok 4.3 Expert
-# 8. Kimi K2.6
+# 8. Kimi K2.7 Code
 # 9. DeepSeek V4 Pro
+# 10. Llama 4 Maverick
 #
 # Every model gets only one shot for each problem
 # Results are saved in /results/<model_name>/<problem_no>/result.txt
@@ -29,7 +30,8 @@ models = {
     "GEMINI_3.1_PRO": os.getenv("GEMINI_3.1_PRO"),
     "CHATGPT_5.5_HIGH": os.getenv("CHATGPT_5.5_HIGH"),
     "GROK_4.3_EXPERT": os.getenv("GROK_4.3_EXPERT"),
-    "KIMI_K2.6": os.getenv("KIMI_K2.6"),
+    "KIMI_K2.7": os.getenv("KIMI_K2.7"),
+    "LLAMA_4_MAVERICK": os.getenv("LLAMA_4_MAVERICK"),
     "DEEPSEEK_V4_PRO": os.getenv("DEEPSEEK_V4_PRO"),
 }
 
@@ -135,15 +137,20 @@ MODEL_CONFIGS = {
         "model_id": "grok-4.3",
         "url": "https://api.x.ai/v1/chat/completions"
     },
-    "KIMI_K2.6": {
+    "KIMI_K2.7": {
         "provider": "openai",
-        "model_id": "moonshotai/kimi-k2.6",
-        "url": "https://api.moonshot.cn/v1/chat/completions"
+        "model_id": "moonshotai/kimi-k2.7-code",
+        "url": "https://openrouter.ai/api/v1/chat/completions"
     },
     "DEEPSEEK_V4_PRO": {
         "provider": "openai",
         "model_id": "deepseek-v4-pro",
         "url": "https://api.deepseek.com/chat/completions"
+    },
+    "LLAMA_4_MAVERICK": {
+        "provider": "openai",
+        "model_id": "meta-llama/llama-4-maverick",
+        "url": "https://openrouter.ai/api/v1/chat/completions"
     }
 }
 
